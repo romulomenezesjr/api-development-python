@@ -52,7 +52,7 @@ web: uvicorn app.main:app --host=0.0.0.0 --port=${PORT:-5000}
 
 ```bash
 $ heroku login
-$ heroku create plym-api
+$ heroku create my-api
 ```
 Configure settings (.env) and mysql addon on heroku
 

@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-from app.settings import settings
-from app.database import Base, engine
-from app.routes import contents_router,playlists_router, users_router, auth_router, likes_router
+from parte7.app.settings import settings
+from parte7.app.database import Base, engine
+from parte7.app.routes import contents_router,playlists_router, users_router, auth_router, likes_router
 from fastapi.middleware.cors import CORSMiddleware
-from app.utils import data_inicialization
+from parte7.app.utils import data_inicialization
 # Criar as tabelas
 Base.metadata.create_all(bind=engine)
 data_inicialization.data_load()
