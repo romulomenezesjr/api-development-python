@@ -3,9 +3,12 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from app import schemas
 from fastapi.security import OAuth2PasswordBearer
-from app.repository.users_repository import UsersRepository
+from app.repository import UsersRepository
 from app.settings import settings
 from app.database import get_db
+from app.dao import Users_DB_Dao
+from app.models import UserModel
+
 oauth2_scheme =OAuth2PasswordBearer(tokenUrl="login")
 
 SECRET_KEY = settings.jwt_secret_key
@@ -38,5 +41,6 @@ def verify_access_token(token:str):
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
     token =  verify_access_token(token)    
-    user_repo = UsersRepository()    
-    return user_repo.get(token.id, next(get_db()))
+    user_repo = UsersRepository(Users_DB_Dao(UserModel))  
+    current_user = user_repo.getById(token.id, next(get_db()))  
+    return current_user

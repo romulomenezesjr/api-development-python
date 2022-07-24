@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.utils import data_inicialization
 # Criar as tabelas
 Base.metadata.create_all(bind=engine)
-#data_inicialization.data_load()
+data_inicialization.data_load()
 
 # Inicia a API
 app = FastAPI(
@@ -22,7 +22,8 @@ app = FastAPI(
 
 # Configura CORS
 origins = [
-    "*",
+    "http://localhost",
+    "http://localhost:8080",
 ]
 
 app.add_middleware(

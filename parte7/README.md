@@ -1,10 +1,10 @@
 # Objetivos
-- Migrations com Alembic
+- [Migrations com Alembic](#migrations-com-alembic)
 - CORS
 - GIT
 - HEROKU
 
-## Alembic
+## Migrations com Alembic
 Iniciando o histórico de alterações no banco de dados com alembic
 
 ```bash
@@ -13,7 +13,7 @@ alembic init alembic
 
 Arquivo alembic/env.py modificado para receber a classe Base.metadata e a string de conexão com o banco SQLALCHEMY_DATABASE_URL 
 ```python
-from alembic import context
+
 context.config.set_main_option("sqlalchemy.url", SQLALCHEMY_DATABASE_URL)
 
 target_metadata = Base.metadata
@@ -24,10 +24,22 @@ alembic upgrade fffffff
 
 
 ## CORS
+Cross-Origin Resource Sharing (Compartilhamento de recursos com origens diferentes) é um mecanismo que usa cabeçalhos adicionais HTTP para informar a um navegador que permita que um aplicativo Web seja executado em uma origem (domínio) com permissão para acessar recursos selecionados de um servidor em uma origem distinta
 
+O cors foi adicionado no main.py
 
 ## GIT
+Criação do repositório no github
+Criação do repositório localmente
+```bash
+git init 
+git branch -M main
+git add .
+git commit -m "initial commit"
+git add remote origin https://github.com/romulomenezesjr/api-development-python
+git push
 
+```
 ## Heroku
  
 

@@ -1,14 +1,16 @@
+from threading import local
 from typing import List
 from fastapi import status, HTTPException,Response, APIRouter, Depends
-from app.repository import playlists_repository, users_repository
+from app.repository import PlaylistsRepository, UsersRepository
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.schemas import  LikedPlaylists, Playlists, PlaylistsInput,PlaylistsDB
+from app.schemas import  LikedPlaylists, Playlist, PlaylistCreate, PlaylistDB
 from app.utils import oauth2
-from app.models import UserModel
+from app.models import PlaylistModel, UserModel
+from app.dao import Users_DB_Dao, Playlists_DB_Dao
 
-playlistRepo = playlists_repository.PlaylistsRepository()
-userRepo = users_repository.UsersRepository()
+playlistRepo = PlaylistsRepository(Playlists_DB_Dao(PlaylistModel))
+userRepo = UsersRepository(Users_DB_Dao(UserModel))
 
 router = APIRouter(
     prefix="/playlists",
@@ -18,47 +20,50 @@ router = APIRouter(
 
 #@router.get("/", status_code = status.HTTP_200_OK, response_model = List[Playlists])
 @router.get("/", status_code = status.HTTP_200_OK, response_model = List[LikedPlaylists])
-def contents(db: Session = Depends(get_db)):
+def playlists(db: Session = Depends(get_db)):
     """
     GET ALL
     """
-    return playlistRepo.getAll(db)
+    return playlistRepo.getAllLiked(db)
 
-@router.get("/{id}", status_code = status.HTTP_200_OK, response_model = Playlists)
+@router.get("/{id}", status_code = status.HTTP_200_OK, response_model = LikedPlaylists)
 def get_playlist(id: int, db: Session = Depends(get_db)):
     """
     GET ID
     """
-    content = playlistRepo.get(id, db)
-    if not content:
+    playlist = playlistRepo.getLiked(id, db)
+    if not playlist:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Playlist with id {id} not found" )
-    return content
+    return playlist
 
-@router.post("/", status_code = status.HTTP_201_CREATED, response_model = Playlists)
-def create_content(playlist: PlaylistsInput, db: Session = Depends(get_db), user:UserModel = Depends(oauth2.get_current_user)):
+@router.post("/", status_code = status.HTTP_201_CREATED, response_model = Playlist)
+def create_playlist(playlist: PlaylistCreate, db: Session = Depends(get_db), user:UserModel = Depends(oauth2.get_current_user)):
     """
-    POST CONTENT
+    POST PLAYLIST
     """
-    playlist_db = PlaylistsDB(**playlist.dict(), owner_id=user.id)
-    new_content = playlistRepo.save(playlist_db, db)
+    playlist_db = PlaylistDB(**playlist.dict(), user_id=user.id)
+    new_playlist = playlistRepo.save(playlist_db, db)
     
-    return new_content
+    return new_playlist
 
-@router.put("/{id}", status_code=status.HTTP_200_OK, response_model=Playlists)
-def update_content(id:int, content: PlaylistsInput, db: Session = Depends(get_db), user:UserModel = Depends(oauth2.get_current_user)):
+@router.put("/{id}", status_code=status.HTTP_200_OK, response_model=Playlist)
+def update_playlist(id:int, playlist_input: PlaylistCreate, db: Session = Depends(get_db), user:UserModel = Depends(oauth2.get_current_user)):
     """
     UPDATE PLAYLIST
     - Verifica se o id existe e lança 404 se não existe
     - Atualiza o conteúdo correspondente
     """
-    local_playlist = playlistRepo.get(id, db)
+    local_playlist = playlistRepo.getById(id, db)
+    
     if not local_playlist:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Content with id {id} not found" )
 
-    if local_playlist.owner_id != user.id:
+    if local_playlist.user_id != user.id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"User {user.email} doest owns playlist {local_playlist.title}")
-    updated_content = playlistRepo.update(local_playlist, content, db)
-    return updated_content
+    
+    updated_playlist = playlistRepo.update(local_playlist, playlist_input, db)
+    
+    return updated_playlist
 
 @router.delete("/{id}",status_code=status.HTTP_204_NO_CONTENT)
 def delete_playlist(id:int,db: Session = Depends(get_db), user:UserModel = Depends(oauth2.get_current_user)):
@@ -67,12 +72,15 @@ def delete_playlist(id:int,db: Session = Depends(get_db), user:UserModel = Depen
     - Verifica se o id existe e lança 404 se não existe
     - Remove a playlist com id correspondente
     """
-    local_playlist = playlistRepo.get(id, db)
+    local_playlist = playlistRepo.getById(id, db)
     if not local_playlist:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Content with id {id} not found" )
     
-    if local_playlist.owner_id != user.id:
+    if local_playlist.user_id != user.id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"User {user.email} doest owns playlist {local_playlist.title}")
-        
-    playlistRepo.delete(local_playlist, db)
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
+    
+    try:
+        playlistRepo.delete(local_playlist, db)
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
+    except Exception as err:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"{err.orig}")

@@ -4,57 +4,71 @@ from app.utils import utils
 
 users = [
     {
-    "id": 1000,
+    "id": 1,
     "email": "admin@admin.com",
     "password": utils.hash ("admin"),
     "name": "Admin",
     "role" : "admin"
     },
-     {
-    "id": 1,
+    {
+    "id": 2,
     "email": "user@user.com",
     "password": utils.hash ("user"),
     "name": "User",
+    "role" : "user"
+    },
+    {
+    "id": 3,
+    "email": "none@none.com",
+    "password": utils.hash ("none"),
+    "name": "none",
     "role" : "user"
     },
 ]
 
 playlists = [
     {
-        "id": 1000,
-        "title": "First playlist",
-        "description": "Description of the first playlist added",
+        "id": 1,
+        "title": "Admin playlist",
+        "description": "Description of the admin playlist",
         "thumbnail": "",
-        "favcount": 0,
         "published": True,
-        "owner_id" : 1000,
+        "user_id" : 1,
+    },
+    {
+        "id": 2,
+        "title": "User playlist",
+        "description": "Description of the user playlist",
+        "thumbnail": "",
+        "published": True,
+        "user_id" : 2,
     }
 ]
 
 contents = [
     {
-        "id": 1001,
-        "title": "First content on first playlist",
+        "id": 1,
+        "title": "Content of admin playlist",
         "url": "nourl",
-        "playlist_id": 1000
+        "playlist_id":1
     },
     {
-        "id": 1002,
-        "title": "First content on first playlist",
+        "id": 2,
+        "title": "First content on user playlist",
         "url": "nourl",
-        "playlist_id": 1000
+        "playlist_id": 2
     },
     {
-        "id": 1003,
-        "title": "First content on first playlist",
+        "id": 3,
+        "title": "Seccond content on user playlist",
         "url": "nourl",
-        "playlist_id": 1000
+        "playlist_id": 2
     },
     {
-        "id": 1004,
-        "title": "First content on first playlist",
+        "id": 4,
+        "title": "Third content on user playlist",
         "url": "nourl",
-        "playlist_id": 1000
+        "playlist_id": 2
     }
 ]
 
@@ -65,8 +79,8 @@ def data_load(delete_on_startup = False):
         try:
             for user in users:
                 db.add(UserModel(**user))
-                db.commit()
-                db.refresh(user)    
+            db.commit()
+            db.refresh(user)    
         except Exception as err:   
             print(err)        
             db.rollback()
@@ -75,8 +89,8 @@ def data_load(delete_on_startup = False):
         try:
             for playlist in playlists:
                 db.add(PlaylistModel(**playlist))
-                db.commit()
-                db.refresh(playlist)    
+            db.commit()
+            db.refresh(playlist)    
         except Exception as err:   
             print(err)        
             db.rollback()
@@ -85,8 +99,8 @@ def data_load(delete_on_startup = False):
         try:
             for content in contents:
                 db.add(ContentModel(**content))
-                db.commit()
-                db.refresh(content)    
+            db.commit()
+            db.refresh(content)    
         except Exception as err:   
             print(err)        
             db.rollback()

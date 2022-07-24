@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from app.settings import settings
 from app.database import Base, engine
 from app.routes import contents_router,playlists_router, users_router, auth_router, likes_router
-from fastapi.middleware.cors import CORSMiddleware
 from app.utils import data_inicialization
 # Criar as tabelas
 Base.metadata.create_all(bind=engine)
@@ -19,20 +18,6 @@ app = FastAPI(
         "url" : settings.api_contact_url
         } 
     )
-
-# Configura CORS
-origins = [
-    "http://localhost",
-    "http://localhost:8080",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 app.include_router(contents_router.router)
 app.include_router(playlists_router.router)

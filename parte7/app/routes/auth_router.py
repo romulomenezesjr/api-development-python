@@ -1,20 +1,23 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.repository.users_repository import UsersRepository
+from app.repository import UsersRepository
 from app.schemas import AccessToken
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from app.utils import utils, oauth2
 from app.database import get_db
 from sqlalchemy.orm import Session
+from app.dao import Users_DB_Dao
+from app.models import UserModel
 
 router = APIRouter(
     tags=["auth"]
 )
 
-user_repo = UsersRepository()
+user_repo = UsersRepository(Users_DB_Dao(UserModel))
 
 @router.post("/login", response_model=AccessToken)
 def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db:Session = Depends(get_db) ):
     user_local = user_repo.getByEmail(user_credentials.username,db)
+
     if not user_local:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"user with email {user_credentials.username} not found" )
     

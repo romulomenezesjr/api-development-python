@@ -20,7 +20,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [SQLAlchemy](https://www.sqlalchemy.org/)
 - [Alembic](https://alembic.sqlalchemy.org/en/latest/)
 - [uvicorn](https://www.uvicorn.org/)
-- [python-jose](https://pypi.org/project/python-jose/camada de routes e repository não será afetad)
+- [python-jose](https://pypi.org/project/python-jose/camada)
 
 # Etapas
 ## Parte 1: Criando ambiente e acessando a API

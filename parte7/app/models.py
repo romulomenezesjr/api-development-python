@@ -1,18 +1,8 @@
-from dataclasses import dataclass
-import email
 from app.database import Base
-from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP, Boolean, Text, text, Table
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP, Boolean, Text
+from sqlalchemy.orm import relationship
 
 #https://docs.sqlalchemy.org/en/14/core/type_basics.html
-
-# association_table = Table(
-#     "user_like_playlist",
-#     Base.metadata,
-#     Column("user", ForeignKey("users.id"), primary_key=True),
-#     Column("playlist", ForeignKey("playlists.id"), primary_key=True),
-# )
-
 
 class LikedPlaylist(Base):
     __tablename__ = "liked_playlists"
@@ -28,8 +18,8 @@ class UserModel(Base):
     name = Column(String(255), nullable=True, unique=False)
     role = Column(String(255), nullable=True, unique=False, server_default="user")
 
-    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
-    playlists = relationship("PlaylistModel", back_populates="owner")
+    # created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()')) SQLite doest have now() method
+    playlists = relationship("PlaylistModel", back_populates="user") 
 
     #liked_playlists = relationship("PlaylistModel", secondary=association_table,back_populates="liked_users")
 
@@ -43,19 +33,16 @@ class PlaylistModel(Base):
     title = Column(String(255), index=False )
     description = Column(Text, index=False)
     thumbnail = Column(String(255), nullable=True, index=False )
-    favcount = Column(Integer, nullable=False, server_default="0")
     published = Column(Boolean, nullable=False, server_default="1")
-    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
+    # created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()')) SQLite doest have now() method
     
     contents = relationship("ContentModel",back_populates="playlist")
     
-    owner_id = Column(Integer, ForeignKey("users.id", ondelete="cascade", onupdate="cascade"), nullable=False)
-    owner = relationship("UserModel", back_populates="playlists")
-
-    #liked_users = relationship("UserModel", secondary=association_table, back_populates="liked_playlists")
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="cascade", onupdate="cascade"), nullable=False)
+    user = relationship("UserModel", back_populates="playlists")
 
     def __str__(self):
-        return f"Title: {self.title}"
+        return f"Id: {self.id}; Title: {self.title}; Owner: {self.user}"
     
 class ContentModel(Base):
     __tablename__ = "contents"
@@ -63,7 +50,7 @@ class ContentModel(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), index=False )
     url = Column(String(255), index=False)
-    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
+    # created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()')) SQLite doest have now() method
     playlist_id = Column(Integer, ForeignKey("playlists.id", ondelete="cascade", onupdate="cascade"), nullable=False)
     playlist = relationship("PlaylistModel", back_populates="contents")
 
