@@ -1,7 +1,7 @@
 from abc import ABC
 from sqlalchemy.orm import Session
 from pydantic import EmailStr
-from app.dao import DaoDB
+from parte7.app.dao import DaoDB
 
 class Repository(ABC):
 

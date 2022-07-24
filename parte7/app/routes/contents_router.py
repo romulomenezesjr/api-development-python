@@ -1,12 +1,12 @@
 from typing import List
 from sqlalchemy.orm import Session
 from fastapi import status, HTTPException,Response, APIRouter, Depends
-from app.database import get_db
-from app.schemas import ContentCreate, Content
-from app.repository import ContentRepository, PlaylistsRepository
-from app.utils import oauth2
-from app.dao import Contents_DB_Dao, Playlists_DB_Dao
-from app.models import ContentModel, PlaylistModel
+from parte7.app.database import get_db
+from parte7.app.schemas import ContentCreate, Content
+from parte7.app.repository import ContentRepository, PlaylistsRepository
+from parte7.app.utils import oauth2
+from parte7.app.dao import Contents_DB_Dao, Playlists_DB_Dao
+from parte7.app.models import ContentModel, PlaylistModel
 
 contents_repo = ContentRepository(Contents_DB_Dao(ContentModel))
 playlists_repo = PlaylistsRepository(Playlists_DB_Dao(PlaylistModel))

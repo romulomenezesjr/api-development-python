@@ -1,12 +1,12 @@
 from typing import List
 from fastapi import status, HTTPException, APIRouter, Depends
-from app.repository import PlaylistsRepository, UsersRepository
+from parte7.app.repository import PlaylistsRepository, UsersRepository
 from sqlalchemy.orm import Session
-from app.database import get_db
-from app.schemas import  Like
-from app.utils import oauth2
-from app.models import LikedPlaylist, PlaylistModel, UserModel
-from app.dao import Playlists_DB_Dao, Users_DB_Dao
+from parte7.app.database import get_db
+from parte7.app.schemas import  Like
+from parte7.app.utils import oauth2
+from parte7.app.models import LikedPlaylist, PlaylistModel, UserModel
+from parte7.app.dao import Playlists_DB_Dao, Users_DB_Dao
 
 playlistRepo = PlaylistsRepository(Playlists_DB_Dao(PlaylistModel))
 userRepo = UsersRepository(Users_DB_Dao(UserModel))

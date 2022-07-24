@@ -1,13 +1,13 @@
 from typing import List
 from fastapi import status, HTTPException,Response, APIRouter, Depends
-from app.repository import UsersRepository
-from app.utils import utils
+from parte7.app.repository import UsersRepository
+from parte7.app.utils import utils
 from sqlalchemy.orm import Session
-from app.database import get_db
-from app.schemas import  UserCreate, User, UserRole, UserUpdate
-from app.utils import oauth2
-from app.dao import Users_DB_Dao
-from app.models import UserModel
+from parte7.app.database import get_db
+from parte7.app.schemas import  UserCreate, User, UserRole, UserUpdate
+from parte7.app.utils import oauth2
+from parte7.app.dao import Users_DB_Dao
+from parte7.app.models import UserModel
 
 userRepo = UsersRepository(Users_DB_Dao(UserModel))
 

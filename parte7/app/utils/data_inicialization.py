@@ -1,6 +1,6 @@
-from app.database import get_db
-from app.models import UserModel, ContentModel, PlaylistModel
-from app.utils import utils
+from parte7.app.database import get_db
+from parte7.app.models import UserModel, ContentModel, PlaylistModel
+from parte7.app.utils import utils
 
 users = [
     {
@@ -106,7 +106,7 @@ def data_load(delete_on_startup = False):
             db.rollback()
 
 
-from app.database import engine
+from parte7.app.database import engine
 from sqlalchemy import text
 def script_load():
     with engine.connect() as con:

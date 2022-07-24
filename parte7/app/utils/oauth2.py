@@ -1,13 +1,13 @@
 from fastapi import Depends, status, HTTPException
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
-from app import schemas
+from parte7.app import schemas
 from fastapi.security import OAuth2PasswordBearer
-from app.repository import UsersRepository
-from app.settings import settings
-from app.database import get_db
-from app.dao import Users_DB_Dao
-from app.models import UserModel
+from parte7.app.repository import UsersRepository
+from parte7.app.settings import settings
+from parte7.app.database import get_db
+from parte7.app.dao import Users_DB_Dao
+from parte7.app.models import UserModel
 
 oauth2_scheme =OAuth2PasswordBearer(tokenUrl="login")
 

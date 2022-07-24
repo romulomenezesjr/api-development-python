@@ -56,8 +56,10 @@ $ heroku create my-api
 ```
 Configure settings (.env) and mysql addon on heroku
 
+Push the main branch to heroku
 ```bash
 $ git push heroku main
 ```
+
 
 

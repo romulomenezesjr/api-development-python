@@ -1,4 +1,4 @@
-from app.models import UserModel, PlaylistModel, LikedPlaylist
+from parte7.app.models import UserModel, PlaylistModel, LikedPlaylist
 from sqlalchemy import func
 
 class DaoDB:

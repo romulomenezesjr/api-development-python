@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.repository import UsersRepository
-from app.schemas import AccessToken
+from parte7.app.repository import UsersRepository
+from parte7.app.schemas import AccessToken
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
-from app.utils import utils, oauth2
-from app.database import get_db
+from parte7.app.utils import utils, oauth2
+from parte7.app.database import get_db
 from sqlalchemy.orm import Session
-from app.dao import Users_DB_Dao
-from app.models import UserModel
+from parte7.app.dao import Users_DB_Dao
+from parte7.app.models import UserModel
 
 router = APIRouter(
     tags=["auth"]
