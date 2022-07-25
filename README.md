@@ -66,7 +66,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Atualizar routes](parte4/README.md#atualizar-routes)
 - Propostas de Estudo
     - Vantagens/Desvantagens entre tipos de banco de dados: Relacionais/Não Relacionais
-    - Comparação entre arquiteturas para aplicações: DDD/Arquitetura Clean/Hexagonal/
+    - Comparação entre [arquiteturas para aplicações](https://www.redhat.com/architect/apis-soap-rest-graphql-grpc)
 ## Parte 5 - Realizar operações de CRUD para Contents, Playlists e Users
 ## Objetivos
 - [CRUD para Playlist](#crud-para-playlist-e-users)
@@ -75,3 +75,9 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - Propostas de Estudo
     - Normalização em Bancos de Dados
     - Recomendação com base em relacionamentos
+
+## Parte 6 - Aplicando Casos de Uso, Autenticação e Configurações
+# Objetivos
+- [Settings](#settings)
+- [Autenticação](#autenticação)
+- [Casos de uso](#casos-de-uso)

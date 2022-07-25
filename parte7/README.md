@@ -1,6 +1,10 @@
+# Parte 7 - Migrations, CORS, GIT e Deploy no Heroku
+
+Nesta etapa iremos configurar o histórico de alterações no banco com alembic, adicionar regras de acesso via CORS, versionar a aplicação com git e usar o heroku para deploy.
+
 # Objetivos
 - [Migrations com Alembic](#migrations-com-alembic)
-- CORS
+- [CORS](#cors)
 - GIT
 - HEROKU
 
@@ -28,9 +32,9 @@ Cross-Origin Resource Sharing (Compartilhamento de recursos com origens diferent
 
 O cors foi adicionado no main.py
 
-## GIT
-Criação do repositório no github
-Criação do repositório localmente
+## Versionamento com GIT
+Para versionar o códdigo iremos criar o repositório no github e iniciar o repositório localmente. 
+
 ```bash
 git init 
 git branch -M main
@@ -42,19 +46,22 @@ git push
 ```
 ## Heroku
  
+O Heroku é uma plataforma para aplicações que irá utilizar o código versionado para fazer o deploy.
 
-Install heroku
+Instalar heroku no computador:
+```bash
 sudo ln -s /var/lib/snapd/snap /snap
 sudo snap install heroku --classic
+```
+Criar o arquivo [Procfile](https://devcenter.heroku.com/articles/procfile)
 
-Procfile
 web: uvicorn app.main:app --host=0.0.0.0 --port=${PORT:-5000}
 
 ```bash
 $ heroku login
 $ heroku create my-api
 ```
-Configure settings (.env) and mysql addon on heroku
+Configurar settings (.env) e mysql addon no heroku
 
 Push the main branch to heroku
 ```bash

@@ -1,3 +1,5 @@
+# Parte 6 - Aplicando Casos de Uso, Autenticação e Configurações
+Nesta etapa iremos adicionar configurações ao projeto e autenticação para usuários. Além disso iremos incluir regras para o uso dos endpoints e regras para permitir ou não requisições.
 
 # Objetivos
 - [Settings](#settings)
