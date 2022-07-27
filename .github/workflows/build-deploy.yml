@@ -1,0 +1,17 @@
+name: Build and Deploy Workflow
+on: [push]
+  push:
+    branches: ["main"]
+jobs:
+  Build-and-Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run:
+          pip install -r requirements.txt
+      - name: Teste
+        run:
+          echo "Hello World"
+          
