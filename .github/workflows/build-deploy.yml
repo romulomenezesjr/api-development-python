@@ -2,6 +2,26 @@ name: Build and Deploy Workflow
 on: [push]
 jobs:
   Build-and-Deploy:
+    env:
+      database_hostname: db
+      database_port: 3306
+      database_username: root
+      database_password: root
+      database_name: plym
+      database_sqlite: sqlite:///./sql_app.db
+
+      api_title: Plym Content API
+      api_version: 0.0.8
+      api_description: API for CRUD Content in Plym App
+      api_contact_name: Romulo Menezes
+      api_contact_email: romulojnr@gmail.com
+      api_contact_url: http://localhost
+      api_licence: licenca
+      api_terms: termos
+
+      jwt_exp_time: 30
+      jwt_secret_key: plym
+      jwt_algorithm: HS256
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
