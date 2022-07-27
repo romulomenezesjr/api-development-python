@@ -5,8 +5,8 @@ Nesta etapa iremos configurar o histórico de alterações no banco com alembic,
 # Objetivos
 - [Migrations com Alembic](#migrations-com-alembic)
 - [CORS](#cors)
-- GIT
-- HEROKU
+- [Versionamento com GIT](#cors)
+- [Heroku](#heroku)
 
 ## Migrations com Alembic
 Iniciando o histórico de alterações no banco de dados com alembic
