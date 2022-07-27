@@ -1,12 +1,13 @@
+"""
+Main module to start the api.
+"""
 from fastapi import FastAPI
-from app.settings import settings
-from app.database import Base, engine
-from app.routes import contents_router, playlists_router, users_router, auth_router, likes_router
 from fastapi.middleware.cors import CORSMiddleware
-from app.utils import data_inicialization
-# Criar as tabelas
-Base.metadata.create_all(bind=engine)
-# data_inicialization.data_load()
+from app.settings import settings
+from app.routes import contents_router, playlists_router
+from app.routes import users_router, auth_router, likes_router
+
+# app.utilsdata_inicialization.data_load()
 
 # Inicia a API
 app = FastAPI(
@@ -17,8 +18,8 @@ app = FastAPI(
         "name": settings.api_contact_name,
         "email": settings.api_contact_email,
         "url": settings.api_contact_url
-        }
-    )
+    }
+)
 
 # Configura CORS
 origins = [
@@ -34,9 +35,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 def home():
-    return {"message":"hello world"}
+    """Home endpoint of the api"""
+    return {"message": "hello world"}
+
 
 app.include_router(contents_router.router)
 app.include_router(playlists_router.router)

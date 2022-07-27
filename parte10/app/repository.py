@@ -5,46 +5,58 @@ from app.dao import DaoDB
 
 
 class Repository(ABC):
+    """Repository to make crud operations with specified dao"""
 
     def __init__(self, dao: DaoDB):
         self.dao = dao
 
-    def getAll(self, db, skip: int = 0, limit: int = 10):
-        return self.dao.getAll(db, skip, limit)
+    def get_all(self, db_session, skip: int = 0, limit: int = 10):
+        """Returns all data from dao."""
+        return self.dao.get_all(db_session, skip, limit)
 
-    def getById(self, id: int, db):
-        return self.dao.getById(id, db)
+    def get_by_id(self, model_id: int, db_session):
+        """Returns a data with model_id from dao."""
+        return self.dao.get_by_id(model_id, db_session)
 
-    def save(self, schema, db):
-        return self.dao.save(schema, db)
+    def save(self, schema, db_session):
+        """Saves a schema data with dao."""
+        return self.dao.save(schema, db_session)
 
-    def update(self, model, schema, db):
-        return self.dao.update(model, schema, db)
+    def update(self, model, schema, db_session):
+        """Updates a model from a schema data with dao."""
+        return self.dao.update(model, schema, db_session)
 
-    def delete(self, model_data, db):
-        self.dao.delete(model_data, db)
+    def delete(self, model_data, db_session):
+        """Deletes a model with dao."""
+        self.dao.delete(model_data, db_session)
 
 
 class ContentRepository(Repository):
-    pass
+    """Specific crud operations for contents table model."""
 
 
 class PlaylistsRepository(Repository):
+    """Specific crud operations for playlists table model."""
 
-    def getAllLiked(self, db):
-        playlists = self.dao.getAllLiked(db)
+    def get_all_liked(self, db_session):
+        """Returns all playlists from dao."""
+        playlists = self.dao.get_all_liked(db_session)
         return playlists
 
-    def getLiked(self, id, db):
-        playlist_local = self.dao.getLiked(id, db)
+    def get_liked(self, playlist_id, db_session):
+        """Returns a playlists from dao."""
+        playlist_local = self.dao.get_liked(playlist_id, db_session)
         return playlist_local
 
-    def getByOwner(self, playlist_id, user_id, db):
-        playlist_local = self.dao.getByOwner(playlist_id, user_id, db)
+    def get_by_owner(self, playlist_id, user_id, db_session):
+        """Returns a playlists from dao with specified id and user id."""
+        playlist_local = self.dao.get_by_owner(playlist_id, user_id, db_session)
         return playlist_local
 
 
 class UsersRepository(Repository):
+    """Specific crud operations for user table model."""
 
-    def getByEmail(self, email: EmailStr, db: Session):
-        return self.dao.getUserByEmail(email, db)
+    def get_by_email(self, email: EmailStr, db_session: Session):
+        """Returns a user from dao with specified email."""
+        return self.dao.get_user_by_email(email, db_session)

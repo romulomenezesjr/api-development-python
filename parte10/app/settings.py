@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     database_name: str
     database_username: str
     database_sqlite: str
-    
+
     api_title: str
     api_version: str
     api_description: str

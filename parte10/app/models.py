@@ -26,7 +26,7 @@ class UserModel(Base):
     # created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()')) SQLite doest have now() method
     playlists = relationship("PlaylistModel", back_populates="user")
 
-    #liked_playlists = relationship("PlaylistModel", secondary=association_table,back_populates="liked_users")
+    # liked_playlists = relationship("PlaylistModel", secondary=association_table,back_populates="liked_users")
 
     def __str__(self):
         return f"Email: {self.email}"

@@ -103,7 +103,7 @@ class PlaylistBase(BaseModel):
         schema_extra = {
             "example": {
                 "title": "Playlist ABC",
-                "thumbnail": "https://www.spcdn.org/templates/sendpulsev1/img/sp_icons/sp-i-fb-autoposting.svg",
+                "thumbnail": "xxxxxxxx",
                 "description": "Minha playlist",
                 "published": True
             }

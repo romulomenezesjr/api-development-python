@@ -6,7 +6,7 @@ jobs:
       database_hostname: db
       database_port: 3306
       database_username: root
-      database_password: root
+      database_password: {{ secrets.database_password }}
       database_name: plym
       database_sqlite: sqlite:///./sql_app.db
 

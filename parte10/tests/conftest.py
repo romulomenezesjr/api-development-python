@@ -13,9 +13,11 @@ Arquivo conftest.py é importado automaticamente por outros testes no mesmo paco
 """
 from app.utils.oauth2 import create_access_token
 
+
 @pytest.fixture
 def token(client, test_user):
     return create_access_token({"user_id": test_user.id})
+
 
 @pytest.fixture
 def authorized_client(client, token):
@@ -23,26 +25,28 @@ def authorized_client(client, token):
         **client.headers,
         "Authorization": f"Bearer {token}"
     }
-    return client 
+    return client
+
 
 @pytest.fixture
 def test_user(session):
     # Change to replace using client to use a direct insertion to the database
-    
+
     # res = client.post("/users/", json={"email":"romulo@gmail.com", "password":"remo"})
     # assert res.status_code == status.HTTP_201_CREATED
     # return User(**res.json())
-    user_db = UserModel(**{"email":"romulo@gmail.com", "password": utils.hash("remo")})
+    user_db = UserModel(**{"email": "romulo@gmail.com", "password": utils.hash("remo")})
     session.add(user_db)
     session.commit()
     session.refresh(user_db)
 
-    return User(email = user_db.email, password=user_db.password, id = user_db.id)
+    return User(email=user_db.email, password=user_db.password, id=user_db.id)
+
 
 @pytest.fixture
-def test_playlists(test_user,session):
+def test_playlists(test_user, session):
     # Change to replace using client to use a direct insertion to the database
-    
+
     # res = authorized_client.post("/playlists/", json={
     #     "title": "Test ",
     #     "thumbnail": "",
@@ -50,11 +54,12 @@ def test_playlists(test_user,session):
     #     "published": "True"
     # })
 
-    playlist_db = PlaylistModel(title="Test", thumbnail="", description="", published=True, user_id = test_user.id)
+    playlist_db = PlaylistModel(title="Test", thumbnail="", description="", published=True, user_id=test_user.id)
     session.add(playlist_db)
     session.commit()
     session.refresh(playlist_db)
     return playlist_db
+
 
 @pytest.fixture
 def session():
@@ -69,6 +74,7 @@ def session():
     finally:
         db.close()
 
+
 @pytest.fixture
 def client(session):
     def get_db_test():
@@ -79,4 +85,3 @@ def client(session):
 
     app.dependency_overrides[get_db] = get_db_test
     yield TestClient(app)
-
