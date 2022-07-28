@@ -27,8 +27,10 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
+          MYSQL_USER: romulo
           MYSQL_PASSWORD: remo
-          MYSQL_DB: plym
+          MYSQL_ROOT_PASSWORD: remo
+          MYSQL_DATABASE: plym
         ports:
         - 3306:3306
         # needed because the mysql container does not provide a healthcheck
