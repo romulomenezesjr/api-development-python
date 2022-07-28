@@ -32,7 +32,7 @@ jobs:
         ports:
         - 3306:3306
         # needed because the mysql container does not provide a healthcheck
-        options: --health-cmd="mysqladmin ping" --health-interval=15s --health-timeout=15s --health-retries=15
+        options: --health-cmd="mysqladmin ping" --health-interval=15s --health-timeout=15s --health-retries=3
 
     runs-on: ubuntu-latest
     steps:
