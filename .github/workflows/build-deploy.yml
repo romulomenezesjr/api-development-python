@@ -6,7 +6,7 @@ jobs:
       database_hostname: mysql
       database_port: 3306
       database_username: root
-      database_password: {{ secrets.database_password }}
+      database_password: remo
       database_name: plym
       database_sqlite: sqlite:///./sql_app.db
 
@@ -27,7 +27,7 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_PASSWORD: {{ secrets.database_password }}
+          MYSQL_PASSWORD: remo
           MYSQL_DB: plym
         ports:
         - 3306:3306
