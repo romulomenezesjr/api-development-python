@@ -5,7 +5,7 @@ jobs:
     env:
       database_hostname: mysql
       database_port: 3306
-      database_username: romulo
+      database_username: root
       database_password: remo
       database_name: plym
       database_sqlite: sqlite:///./sql_app.db
@@ -27,9 +27,7 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_USER: romulo
-          MYSQL_PASSWORD: remo
-          MYSQL_ROOT_PASSWORD: remo
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: plym
         ports:
         - 3306:3306
