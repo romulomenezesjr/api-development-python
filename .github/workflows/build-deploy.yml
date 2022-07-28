@@ -3,7 +3,7 @@ on: [push]
 jobs:
   Build-and-Deploy:
     env:
-      database_hostname: db
+      database_hostname: mysql
       database_port: 3306
       database_username: root
       database_password: {{ secrets.database_password }}
@@ -22,6 +22,18 @@ jobs:
       jwt_exp_time: 30
       jwt_secret_key: plym
       jwt_algorithm: HS256
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_PASSWORD: {{ secrets.database_password }}
+          MYSQL_DB: plym
+        ports:
+        - 3306:3306
+        # needed because the mysql container does not provide a healthcheck
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=10
+
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
