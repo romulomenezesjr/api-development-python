@@ -23,16 +23,7 @@ jobs:
       jwt_secret_key: plym
       jwt_algorithm: HS256
 
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: plym
-        ports:
-        - 3306:3306
-        # needed because the mysql container does not provide a healthcheck
-        options: --health-cmd="mysqladmin ping" --health-interval=15s --health-timeout=15s --health-retries=3
+    
 
     runs-on: ubuntu-latest
     steps:
@@ -46,6 +37,10 @@ jobs:
         run: pip install --upgrade pip
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - uses: shogo82148/actions-setup-mysql@v1
+        with:
+          mysql-version: '8.0'
+      - run: mysql -uroot -h127.0.0.1 -e 'CREATE DATABASE plym;'
       - name: Test with pytest
         run: pytest -v -s parte10/tests
           
