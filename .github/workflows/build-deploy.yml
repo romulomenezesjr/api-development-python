@@ -3,7 +3,7 @@ on: [push]
 jobs:
   Build-and-Deploy:
     env:
-      database_hostname: mysql
+      database_hostname: localhost
       database_port: 3306
       database_username: root
       database_password: ""
