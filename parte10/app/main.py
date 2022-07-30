@@ -39,7 +39,7 @@ app.add_middleware(
 @app.get("/")
 def home():
     """Home endpoint of the api"""
-    return {"message": "hello world"}
+    return {"message": "hello heroku"}
 
 
 app.include_router(contents_router.router)

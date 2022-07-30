@@ -1,7 +1,7 @@
 name: Build and Deploy Workflow
 on: [push]
 jobs:
-  Build-and-Deploy:
+  Build:
     env:
       database_hostname: localhost
       database_port: 3306
@@ -43,4 +43,19 @@ jobs:
       - run: mysql -uroot -h127.0.0.1 -e 'CREATE DATABASE plym;'
       - name: Test with pytest
         run: pytest -v -s parte10/tests
+  Deploy:
+    runs-on: ubuntu-latest
+    needs: 
+      - Build
+    steps:
+      - name: Deploy
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir: parte10/
+    
           
