@@ -37,7 +37,7 @@ starlette==0.19.1
 typing_extensions==4.3.0
 ujson==5.4.0
 urllib3==1.26.10
-uvicorn==0.17.6
+uvicorn==0.20.0
 uvloop==0.16.0
 watchgod==0.8.2
 websockets==10.3
